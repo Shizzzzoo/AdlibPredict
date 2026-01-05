@@ -8,9 +8,9 @@ import sys
 def capture_and_predict():
     """
     Captures an image from the webcam, saves it, and runs the model inference
-    script as a background process.
-    """
-    # --- 1. Image Capture ---
+    script as a background process
+        """
+    
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
