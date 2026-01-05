@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-python -m server.run
+python server.py
