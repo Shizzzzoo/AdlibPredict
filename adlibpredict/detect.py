@@ -1,7 +1,9 @@
 import cv2
+import time
 import threading
 
 from rich import print
+
 
 class FrameCollector:
   def __init__(
@@ -20,3 +22,39 @@ class FrameCollector:
     if not self.cap.isOpened():
       print("Error: Could not open RTSP stream.")
       exit()
+    self._thread = threading.Thread(
+      target=self._update,
+    )
+
+  def _update(
+    self,
+  ):
+    while self._running:
+      ret, frame = self._cap.read()
+      if ret:
+        with self._lock:
+          self._frame = frame
+      else:
+        time.sleep(0.1)
+
+  def read(
+    self,
+  ):
+    with self._lock:
+      return (
+        self._frame if self._frame is not None else None
+      )
+
+  def stop(
+    self,
+  ):
+    self._running = False
+    self._thread.join()
+    self._cap.release()
+
+
+class Detector:
+  def __init__(
+    self,
+  ):
+    pass
