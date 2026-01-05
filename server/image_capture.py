@@ -10,7 +10,7 @@ def capture_and_predict():
     Captures an image from the webcam, saves it, and runs the model inference
     script as a background process
         """
-    
+
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
@@ -42,7 +42,7 @@ def capture_and_predict():
     # --- 3. Run the Model in the Background ---
     # Get the path to the run_model.py script
     run_model_script_path = os.path.join(os.path.dirname(__file__), "run_model.py")
-    
+
     # Get the python interpreter path
     python_executable = sys.executable
 

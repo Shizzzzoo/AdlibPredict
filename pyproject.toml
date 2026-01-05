@@ -1,0 +1,7 @@
+[project]
+name = "adlibpredict"
+version = "0.0.0"
+description = "script for nidar"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
