@@ -236,15 +236,16 @@ def main():
     name="rtsp_server"
   )
 
+  def safe_terminate(proc):
+    if proc is not None and getattr(proc, "_popen", None) is not None:
+      proc.terminate()
+      time.sleep(0.5)
+      if proc.is_alive():
+        proc.kill()
+
   def signal_handler(sig, frame):
-    print("\n\nShutting down...")
-    feeder_proc.terminate()
-    rtsp_proc.terminate()
-    time.sleep(1)
-    if feeder_proc.is_alive():
-        feeder_proc.kill()
-    if rtsp_proc.is_alive():
-        rtsp_proc.kill()
+    safe_terminate(feeder_proc)
+    safe_terminate(rtsp_proc)
     sys.exit(0)
 
   signal.signal(signal.SIGINT, signal_handler)
@@ -259,12 +260,8 @@ def main():
   except KeyboardInterrupt:
     print("\nInterrupted by user")
   finally:
-    if feeder_proc.is_alive():
-      feeder_proc.terminate()
-    if rtsp_proc.is_alive():
-      rtsp_proc.terminate()
-    feeder_proc.join(timeout=2)
-    rtsp_proc.join(timeout=2)
+    safe_terminate(feeder_proc)
+    safe_terminate(rtsp_proc)
 
 
 if __name__ == "__main__":
