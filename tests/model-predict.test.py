@@ -3,6 +3,7 @@ import os
 from ultralytics import YOLO
 from rich import print
 
+
 root = os.path.dirname(__file__)
 model = YOLO(
   os.path.join(
