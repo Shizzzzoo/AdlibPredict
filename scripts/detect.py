@@ -16,7 +16,7 @@ MAV_CONNECTION_STRING = "udp:127.0.0.1:14550"
 TARGET_SYSID = 1
 
 # AI Check Interval (Seconds)
-CHECK_INTERVAL = 0.5 
+CHECK_INTERVAL = 0.5
 
 # ==========================================
 # CLASS 1: THE VIDEO JANITOR (Thread A)
@@ -89,7 +89,7 @@ class DroneTelemetry:
         while self.running:
             # Wait for a 'GLOBAL_POSITION_INT' message
             msg = self.connection.recv_match(type='GLOBAL_POSITION_INT', blocking=True)
-            
+
             # Filter: Ensure message comes from Drone 1
             if msg and msg.get_srcSystem() == self.target_sysid:
                 self.latest_lat = msg.lat / 1e7  # Convert to degrees
@@ -112,10 +112,10 @@ def run_detection_model(frame):
     Returns True if human detected, else False.
     """
     # For testing: Let's pretend we found a human if the image is mostly bright
-    # Replace this entire block with: 
+    # Replace this entire block with:
     # results = model(frame)
     # return len(results) > 0
-    return False 
+    return False
 
 # ==========================================
 # MAIN LOOP
@@ -123,11 +123,11 @@ def run_detection_model(frame):
 if __name__ == "__main__":
     # 1. Start Telemetry Thread
     telemetry = DroneTelemetry(MAV_CONNECTION_STRING, TARGET_SYSID)
-    
+
     # 2. Start Video Thread
     print(f"Connecting to video: {RTSP_URL}...")
     video = VideoStream(RTSP_URL)
-    
+
     # Wait a moment for streams to stabilize
     time.sleep(2)
     print("System Active. Press 'q' to quit.")
@@ -147,23 +147,23 @@ if __name__ == "__main__":
 
             # --- THE AI CHECK LOOP (Runs every 0.5 - 1.0s) ---
             if current_time - last_check_time > CHECK_INTERVAL:
-                
+
                 # Run AI on the FRESH frame
-                human_detected = run_detection_model(frame) 
+                human_detected = run_detection_model(frame)
 
                 if human_detected:
                     # FETCH GPS INSTANTLY
                     lat, lon, alt = telemetry.get_location()
-                    
+
                     print(f"!!! TARGET DETECTED !!!")
                     print(f"Coordinates: {lat}, {lon} | Alt: {alt}m")
                     print(f"ACTION: Enter these into Mission Planner for Drone 2")
                     print("-" * 30)
 
                     # Draw red box and text on screen for operator
-                    cv2.putText(display_frame, f"TARGET: {lat:.6f}, {lon:.6f}", 
+                    cv2.putText(display_frame, f"TARGET: {lat:.6f}, {lon:.6f}",
                                (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 3)
-                    
+
                     # Optional: Save image to disk
                     # cv2.imwrite(f"detection_{time.time()}.jpg", frame)
 

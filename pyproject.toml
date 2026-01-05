@@ -4,4 +4,9 @@ version = "0.0.0"
 description = "script for nidar"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "opencv-contrib-python==4.12.0.88",
+    "opencv-contrib-python-headless==4.12.0.88",
+    "opencv-python==4.12.0.88",
+    "opencv-python-headless==4.12.0.88",
+]
