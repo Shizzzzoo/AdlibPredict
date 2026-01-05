@@ -39,7 +39,7 @@ class DroneConfig:
         video_height: int = 720,
         image_quality: int = 95,
 
-        storage_path: (str | Path) = "/mnt/ssd",
+        storage_path: (str | Path) = "capture/",
 
     ) -> None:
 
@@ -103,7 +103,7 @@ class DroneConfig:
             video_height=geti("VIDEO_HEIGHT", 720),
             image_quality=geti("IMAGE_QUALITY", 95),
 
-            storage_path=os.getenv("SSD_PATH", "/mnt/ssd"),
+            storage_path=os.getenv("SSD_PATH", "capture/"),
         )
 
 
