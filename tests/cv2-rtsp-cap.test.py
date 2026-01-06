@@ -1,12 +1,3 @@
-"""
-run the rtsp server using the following cmd:
-
-`
-
-`
-"""
-
-
 import cv2
 
 cap = cv2.VideoCapture(0)
