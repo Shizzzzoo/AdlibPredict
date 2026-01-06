@@ -58,3 +58,13 @@ class Detector:
     self,
   ):
     pass
+
+  def load(
+    self,
+  ):
+    pass
+
+  def predict(
+    self,
+  ):
+    pass
