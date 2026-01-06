@@ -38,6 +38,7 @@ def _queue_worker(func):
     if first:
       time.sleep(INITIAL_EXTRA_DELAY)
       first = False
+    print(f"An Item Popped. Queue: {queue}")
     try:
       func(item)
     except Exception as e:
@@ -56,6 +57,7 @@ def trigger(
   with queue_lock:
     if not queue:
       queue.append(ts)
+      print(f"An Item Appended. Queue: {queue}")
       return {
         "status": "added",
         "reason": "queue was empty",
@@ -63,11 +65,13 @@ def trigger(
     last_ts = queue[-1]
     interval = ts - last_ts
     if interval < IGNORE_THRESHOLD:
+      print(f"An Item Ignored. Queue: {queue}")
       return {
         "status": "ignored",
         "reason": f"interval too small ({interval:.2f}s)",
       }
     queue.append(ts)
+    print(f"An Item Appended. Queue: {queue}")
     return {
       "status": "added",
       "reason": "interval ok",
