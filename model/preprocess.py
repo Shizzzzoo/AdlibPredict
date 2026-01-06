@@ -6,7 +6,7 @@ from rich import print
 
 INPUT_JSON_PATH = os.path.abspath(os.path.join(
   os.path.dirname(__file__),
-  "./dataset/json/dataset.json",
+  "./dataset/json/data.json",
 ))
 OUTPUT_COCO_PATH = os.path.abspath(os.path.join(
   os.path.dirname(__file__),
@@ -52,10 +52,19 @@ def convert_json_to_coco(
         category_id = ann["category_id"]
         f.write(f"{category_id} {x_center:.6f} {y_center:.6f} {norm_width:.6f} {norm_height:.6f}\n")
     print(f"Created label file: {label_file.name} ({len(img_annotations)} annotations)")
+  yaml_content = f"""# Dataset Configuration
+path: {dataset_path.absolute()}
+train: images/train
 
+# Classes
+names:
+"""
+  for cat_id in sorted(categories.keys()):
+    yaml_content += f"  {cat_id}: {categories[cat_id]}\n"
+  yaml_path = dataset_path / "data.yaml"
+  with open(yaml_path, 'w') as f:
+    f.write(yaml_content)
 
-
-    break
 
 def main():
   convert_json_to_coco(
