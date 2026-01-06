@@ -1,4 +1,4 @@
-from adlibpredict.detect import (
+from adlibpredict._objects import (
   FrameCollector,
   Detector,
 )

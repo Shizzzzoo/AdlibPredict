@@ -3,6 +3,7 @@ import time
 import threading
 
 from rich import print
+from ultralytics import YOLO
 
 
 class FrameCollector:
@@ -20,11 +21,14 @@ class FrameCollector:
     self._running = True
     self._lock = threading.RLock()
     if not self._cap.isOpened():
-      print("Error: Could not open RTSP stream.")
+      print("[red]Error: Could not open RTSP stream.[/red]")
       exit()
     self._thread = threading.Thread(
       target=self._update,
+      daemon=True,
     )
+    self._thread.start()
+    print("Frame collector started.")
 
   def _update(
     self,
@@ -42,7 +46,7 @@ class FrameCollector:
   ):
     with self._lock:
       return (
-        self._frame if self._frame is not None else None
+        self._frame.copy() if self._frame is not None else None
       )
 
   def stop(
@@ -51,20 +55,35 @@ class FrameCollector:
     self._running = False
     self._thread.join()
     self._cap.release()
+    print("Frame collector stopped.")
 
 
 class Detector:
   def __init__(
     self,
+    model_path,
   ):
-    pass
+    self._model_path =  model_path
+    self._model = None
 
   def load(
     self,
   ):
-    pass
+    print(f"Loading model from {self._model_path}...")
+    self._model = YOLO(self._model_path)
+    print("Model loaded successfully.")
 
   def predict(
     self,
+    frame,
+    conf=0.25,
+    iou=0.45,
   ):
-    pass
+    if self._model is None:
+      raise RuntimeError("Model not loaded. Call load() first.")
+    res = self._model(
+      frame,
+      conf=conf,
+      iou=iou,
+    )
+    return res
