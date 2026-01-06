@@ -16,13 +16,13 @@ YOLO11M = os.path.abspath(os.path.join(
   os.path.dirname(__file__),
   "./weights/pretrained/yolo11m.pt"
 ))
-RUNNER_LOG_PATH = os.path.abspath(os.path.join(
+RUNS_LOG_DIR = os.path.abspath(os.path.join(
   os.path.dirname(__file__),
-  "./weights/run/"
+  "./runs/detect/"
 ))
 
 Path(PRETRAINED_WEIGHTS_DIR).mkdir(parents=True, exist_ok=True)
-Path(RUNNER_LOG_PATH).mkdir(parents=True, exist_ok=True)
+Path(RUNS_LOG_DIR).mkdir(parents=True, exist_ok=True)
 
 
 from ultralytics.utils import SETTINGS
@@ -36,6 +36,6 @@ model.train(
   batch=32,
   imgsz=1024,
   plots=True,
-  project=RUNNER_LOG_PATH,
+  project=RUNS_LOG_DIR,
   name="trainner",
 )
