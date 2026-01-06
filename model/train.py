@@ -33,7 +33,7 @@ model = YOLO(YOLO11M)
 model.train(
   data=COCO_DATASET,
   epochs=500,
-  batch=32,
+  batch=16,
   imgsz=640,
   plots=True,
   project=RUNS_LOG_DIR,
