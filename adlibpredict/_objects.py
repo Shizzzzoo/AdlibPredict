@@ -76,7 +76,10 @@ class FrameCollector:
 
 
 class Detector:
-  def __init__(self, model_path):
+  def __init__(
+    self,
+    model_path,
+  ):
     self._model_path = model_path
     self._model = None
 
@@ -85,7 +88,13 @@ class Detector:
     self._model = YOLO(self._model_path)
     print("Model loaded successfully.")
 
-  def predict(self, frame, conf=0.25, iou=0.45, verbose=False):
+  def predict(
+    self,
+    frame,
+    conf=0.25,
+    iou=0.45,
+    verbose=False,
+  ):
     if self._model is None:
       raise RuntimeError("Model not loaded. Call load() first.")
 
