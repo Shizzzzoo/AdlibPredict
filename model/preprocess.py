@@ -55,6 +55,7 @@ def convert_json_to_coco(
   yaml_content = f"""# Dataset Configuration
 path: {dataset_path.absolute()}
 train: images/train
+val: images/train
 
 # Classes
 names:

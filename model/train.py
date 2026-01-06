@@ -37,5 +37,5 @@ model.train(
   imgsz=1024,
   plots=True,
   project=RUNS_LOG_DIR,
-  name="trainner",
+  name="train",
 )
