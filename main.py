@@ -19,12 +19,12 @@ def workflow():
   det = Detector(os.environ.get("MODEL_PATH"))
   det.load()
   while True:
-    cur = time.time()
+    cur = time.perf_counter()
     frame = col.read()
     if frame is not None:
       res = det.predict(frame)
       print(res)
-      time.sleep(interval-(time.time()-cur))
+      time.sleep(max(0,interval-(time.perf_counter()-cur)))
 
 
 def main():
