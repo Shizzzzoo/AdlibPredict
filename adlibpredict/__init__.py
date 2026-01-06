@@ -3,6 +3,7 @@ from adlibpredict._objects import (
   Detector,
 )
 
+
 __all__ = [
   "Detector",
   "FrameCollector",
