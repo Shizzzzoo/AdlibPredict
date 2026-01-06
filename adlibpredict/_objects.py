@@ -1,3 +1,4 @@
+import copy
 import cv2
 import time
 import threading
@@ -12,6 +13,7 @@ class FrameCollector:
   ):
     self.rtsp_url = rtsp_url
     self._frame = None
+    self._frame_ts = None
     self._running = True
     self._lock = threading.RLock()
     self._cap = None
@@ -19,7 +21,10 @@ class FrameCollector:
     if not self._cap or not self._cap.isOpened():
       print("Error: Could not open RTSP stream.")
       exit()
-    self._thread = threading.Thread(target=self._update, daemon=True)
+    self._thread = threading.Thread(
+      target=self._update,
+      daemon=True,
+    )
     self._thread.start()
     print("Frame collector started.")
 
@@ -31,10 +36,12 @@ class FrameCollector:
       if cap.isOpened():
         ret, frame = cap.read()
         if ret and frame is not None:
+          ts = time.time()
           print("Connection Successful.")
           self._cap = cap
           with self._lock:
             self._frame = frame
+            self._frame_ts = ts
           return
         cap.release()
     except Exception as e:
@@ -46,8 +53,10 @@ class FrameCollector:
         if self._cap and self._cap.isOpened():
           ret, frame = self._cap.read()
           if ret and frame is not None:
+            ts = time.time()
             with self._lock:
               self._frame = frame
+              self._frame_ts = ts
           else:
             time.sleep(0.01)
         else:
@@ -56,15 +65,18 @@ class FrameCollector:
         print(f"Error in frame update thread: {e}")
         time.sleep(0.1)
 
-  def read(self):
+  def read(self):   # (timestamp, frame)
     with self._lock:
-      if self._frame is not None:
+      if self._frame is not None and self._frame_ts is not None:
         try:
-          return self._frame.copy()
+          return (
+            copy.deepcopy(self._frame_ts),
+            self._frame.copy(),
+          )
         except Exception as e:
           print(f"Error copying frame: {e}")
-          return None
-      return None
+          return (None, None)
+      return (None, None)
 
   def stop(self):
     self._running = False

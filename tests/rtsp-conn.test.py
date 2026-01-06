@@ -15,15 +15,15 @@ from adlibpredict import FrameCollector
 
 print("Starting RTSP connection test...")
 rec = FrameCollector(
-    rtsp_url="rtsp://localhost:8554/live",
+  rtsp_url="rtsp://localhost:8554/live",
 )
 print("Waiting for frames...")
 time.sleep(2)
 print("Testing frame capture...")
 for i in range(10):
-  frame = rec.read()
-  if frame is not None:
-    print(f"Frame {i+1}: Shape={frame.shape}, DType={frame.dtype}")
+  ts, frame = rec.read()
+  if frame is not None and ts is not None:
+    print(f"Frame {i+1}: Shape={frame.shape}, DType={frame.dtype}, Timestamp={ts}")
   else:
     print(f"Frame {i+1}: None")
   time.sleep(0.5)
