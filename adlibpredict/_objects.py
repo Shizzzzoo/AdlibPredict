@@ -103,7 +103,6 @@ class Detector:
   def predict(
     self,
     frame,
-    frame_ts,
     conf=0.25,
     iou=0.45,
     verbose=False,
@@ -112,8 +111,6 @@ class Detector:
       raise RuntimeError("Model not loaded. Call load() first.")
     if frame is None:
       raise ValueError("Frame is None, cannot predict")
-    if frame_ts is None:
-      raise ValueError("Frame Timestamp is None, cannot predict")
     results = self._model(
       frame,
       conf=conf,
@@ -136,7 +133,6 @@ class Detector:
     # <float>ts -> True
     res = self.predict(
       frame,
-      frame_ts,
       conf,
       iou,
       verbose,
