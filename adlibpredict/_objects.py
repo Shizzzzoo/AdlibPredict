@@ -103,24 +103,53 @@ class Detector:
   def predict(
     self,
     frame,
+    frame_ts,
     conf=0.25,
     iou=0.45,
     verbose=False,
   ):
     if self._model is None:
       raise RuntimeError("Model not loaded. Call load() first.")
-
     if frame is None:
       raise ValueError("Frame is None, cannot predict")
+    if frame_ts is None:
+      raise ValueError("Frame Timestamp is None, cannot predict")
+    results = self._model(
+      frame,
+      conf=conf,
+      iou=iou,
+      verbose=verbose,
+    )
+    return results[0]
 
-    try:
-      results = self._model(
-        frame,
-        conf=conf,
-        iou=iou,
-        verbose=verbose,
-      )
-      return results[0]
-    except Exception as e:
-      print(f"Prediction error: {e}")
-      raise
+  def is_detected(
+    self,
+    frame,
+    frame_ts,
+    conf=0.25,
+    iou=0.45,
+    verbose=False,
+    class_id=0,
+    min_conf=0.3,
+  ):
+    # -1.0      -> False
+    # <float>ts -> True
+    res = self.predict(
+      frame,
+      frame_ts,
+      conf,
+      iou,
+      verbose,
+    )
+    boxes = res.boxes
+    if boxes is None or len(boxes) == 0:
+      return -1.0
+    pred_cls = boxes.cls
+    pred_conf = boxes.conf
+    for c, s in zip(pred_cls, pred_conf):
+      if int(c) != class_id:
+        continue
+      if s < min_conf:
+        continue
+      return frame_ts
+    return -1.0
