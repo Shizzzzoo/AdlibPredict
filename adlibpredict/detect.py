@@ -15,11 +15,11 @@ class FrameCollector:
       "rtph264depay ! h264parse ! avdec_h264 ! "
       "videoconvert ! appsink drop=true sync=false"
     )
-    self._cap = cv2.VideoCapture(self.gst_pipeline, cv2.CAP_GSTREAMER)
+    self._cap = cv2.VideoCapture(self._gst_pipeline, cv2.CAP_GSTREAMER)
     self._frame = None
     self._running = True
     self._lock = threading.RLock()
-    if not self.cap.isOpened():
+    if not self._cap.isOpened():
       print("Error: Could not open RTSP stream.")
       exit()
     self._thread = threading.Thread(
