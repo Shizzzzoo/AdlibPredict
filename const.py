@@ -1,2 +1,0 @@
-CHECK_INTERVAL = 0.5
-RTSP_URL = "rtsp://192.168.144.25:8554/main.264"
