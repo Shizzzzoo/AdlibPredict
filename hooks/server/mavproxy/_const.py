@@ -1,0 +1,11 @@
+import os
+import sys
+
+from rich import print
+from pathlib import Path
+from platformdirs import user_cache_dir
+
+LL_STREAM_FILE = Path(user_cache_dir(
+  appname="nidar",
+  ensure_exists=True,
+)) / "tll.csv"
