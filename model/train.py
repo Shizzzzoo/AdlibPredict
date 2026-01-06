@@ -34,7 +34,7 @@ model.train(
   data=COCO_DATASET,
   epochs=500,
   batch=32,
-  imgsz=1024,
+  imgsz=640,
   plots=True,
   project=RUNS_LOG_DIR,
   name="train",
