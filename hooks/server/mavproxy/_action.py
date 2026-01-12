@@ -12,7 +12,8 @@ sys.path.extend([
 
 from hooks.server.mavproxy._const import LL_STREAM_FILE
 
-def get_ll(ts):
+
+def _get_ll(ts):
   data = pd.read_csv(LL_STREAM_FILE)
   idx = (data["Timestamp"] - ts).abs().idxmin()
   return (
@@ -21,7 +22,24 @@ def get_ll(ts):
   )
 
 
+def _get_mavlink(
+  conn_str,
+):
+  pass
+
+
+def _goto(
+  lat,
+  long,
+):
+  pass
+
+
 def do_action(
   timestamp,
 ):
-  lat, long = get_ll(timestamp)
+  lat, long = _get_ll(timestamp)
+  _goto(
+    lat,
+    long,
+  )
