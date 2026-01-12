@@ -10,7 +10,10 @@ sys.path.extend([
   os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")),
 ])
 
-from hooks.server.mavproxy._const import LL_STREAM_FILE
+from hooks.server.mavproxy._const import (
+    LL_STREAM_FILE,
+    MAVGEN_CONN_STR,
+  )
 
 
 def _get_ll(ts):
