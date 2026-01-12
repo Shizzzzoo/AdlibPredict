@@ -8,7 +8,7 @@ root = os.path.dirname(__file__)
 model = YOLO(
   os.path.join(
     root,
-    "../model/weights/trained/best.pt",
+    "../model/weights/trained/yolov11m.pt",
   )
 )
 input_dir = os.path.join(
