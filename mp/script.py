@@ -57,5 +57,5 @@ while True:
     except Exception as e:
       print("DATA ERROR: " + str(e))
   else:
-      print("Waiting for Vehicle SYSID 1...")
+    print("waiting for vehicle SYSID 1...")
   Script.Sleep(100)
