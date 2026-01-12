@@ -10,10 +10,14 @@ sys.path.extend([
   os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")),
 ])
 
+from pymavlink import mavutil
 from hooks.server.mavproxy._const import (
     LL_STREAM_FILE,
     MAVGEN_CONN_STR,
   )
+
+
+_SLAVE = None
 
 
 def _get_ll(ts):
@@ -28,14 +32,29 @@ def _get_ll(ts):
 def _get_mavlink(
   conn_str,
 ):
-  pass
+  global _SLAVE
+  if _SLAVE is None:
+    _SLAVE = mavutil.mavlink_connection(MAVGEN_CONN_STR)
+    _SLAVE.wait_heartbeat()
+    print(
+      "[mavlink] connection established successfull."
+      f"(sysid={_SLAVE.target_system}, compid={_SLAVE.target_component})"
+    )
+  else:
+    print(
+      "[mavlink] using the existing connection."
+      f"(sysid={_SLAVE.target_system}, compid={_SLAVE.target_component})"
+    )
+  return _SLAVE
 
 
 def _goto(
   lat,
   long,
+  alt=None,
+  conn_str=MAVGEN_CONN_STR,
 ):
-  pass
+  mav = _get_mavlink(conn_str)
 
 
 def do_action(
