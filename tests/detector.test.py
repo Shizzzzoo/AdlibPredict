@@ -13,9 +13,9 @@ sys.path.extend([
 
 from rich import print
 from adlibpredict import (
-  FrameCollector,
-  Detector,
-)
+    FrameCollector,
+    Detector,
+  )
 
 root = os.path.dirname(__file__)
 model_path = os.environ.get("MODEL_PATH")

@@ -10,9 +10,9 @@ from rich import print
 from pathlib import Path
 from hooks.client import send_trigger
 from adlibpredict import (
-  FrameCollector,
-  Detector
-)
+    FrameCollector,
+    Detector
+  )
 
 
 def workflow(

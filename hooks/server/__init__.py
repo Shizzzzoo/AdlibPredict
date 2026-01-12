@@ -8,8 +8,8 @@ sys.path.extend([
 ])
 
 from hooks.server.handler import (
-  TriggerRequest,
-)
+    TriggerRequest,
+  )
 
 
 __all__ = [
