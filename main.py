@@ -42,7 +42,6 @@ def workflow(
   except ValueError:
     print(f"interval string must be a number, but got `{interval_str}`.")
     sys.exit()
-  print(type(rtsp_url))
   print(f"rtsp url: `{rtsp_url}`")
   print(f"model path: `{model_path}`")
   print(f"interval: `{interval}`")
@@ -79,12 +78,14 @@ def workflow(
 def main():
   parser = argparse.ArgumentParser()
   parser.add_argument(
-    "--test",
-    action="store_true",
+    "mode",
+    nargs="?",
+    default="run",
+    choices=["run", "test"],
   )
   args = parser.parse_args()
   workflow(
-    test=args.test,
+    test=(args.mode == "test"),
   )
 
 
