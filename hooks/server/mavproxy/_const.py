@@ -10,4 +10,4 @@ from platformdirs import user_cache_dir
 #   ensure_exists=True,
 # )) / "tll.csv"
 LL_STREAM_FILE = Path(r"C:\Users\Dell\AppData\Local\nidar\tll.csv")
-MAVGEN_CONN_STR = "udpin:localhost:14541"
+MAVGEN_CONN_STR = "udpin:localhost:14551"
