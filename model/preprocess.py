@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from rich import print
 
+
 INPUT_JSON_PATH = os.path.abspath(os.path.join(
   os.path.dirname(__file__),
   "./dataset/json/data.json",
@@ -12,6 +13,7 @@ OUTPUT_COCO_PATH = os.path.abspath(os.path.join(
   os.path.dirname(__file__),
   "./dataset/coco/",
 ))
+
 
 def convert_json_to_coco(
   input_json_path,
