@@ -1,7 +1,7 @@
 from adlibpredict._objects import (
-  FrameCollector,
-  Detector,
-)
+    FrameCollector,
+    Detector,
+  )
 
 
 __all__ = [

@@ -1,6 +1,6 @@
 from hooks.client.handler import (
-  send_trigger,
-)
+    send_trigger,
+  )
 
 
 __all__ = [
