@@ -1,4 +1,4 @@
-from hooks.client._handler import (
+from hooks.client.handler import (
   send_trigger,
 )
 
