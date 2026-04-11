@@ -4,7 +4,9 @@ import requests
 from rich import print
 
 
-URL = "http://localhost:8000/trigger"
+IP = "192.168.0.101"
+PORT = "8000"
+URL = f"http://{IP if not IP else "localhost"}:{PORT}/trigger"
 
 
 def send_trigger(
