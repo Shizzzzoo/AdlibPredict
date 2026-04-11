@@ -13,6 +13,7 @@ dependencies = [
   "pandas==2.3.3",
   "platformdirs==4.5.1",
   "pydantic==2.12.5",
+  "pymavlink==2.4.49",
   "python-dotenv>=1.2.1",
   "requests==2.32.5",
   "rich>=14.2.0",
